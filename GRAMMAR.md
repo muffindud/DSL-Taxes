@@ -21,7 +21,7 @@ P = {
     <real> -> <integer>.<integer> | <integer> | max
     <integer> -> <digit><integer> | <digit>
     <rate> -> 0.<integer> | 1 | 0
-    <percentage> -> <digit><digit>.<integer> % | 100 % | 0 %
+    <percentage> -> <digit><digit>.<integer> % | <digit><digit> % | <digit> % | 100 % | 0 %
     <letter> -> a | A | b | B | ... | z | Z
     <symbol> -> . | ! | ? | , | : | ; | - | < | > | @ | # | % | \ | / | + | * | $
     <digit> -> 0 | 1 | 2 | ... | 9
@@ -31,4 +31,43 @@ P = {
     <charity> -> INDENTATION INDENTATION charity_deduction = <float> NEWLINE <newline> 
     <standart> -> INDENTATION INDENTATION standart_deduction = <float> NEWLINE <newline>
 }
+```
+
+### Code example:
+```
+tax_bracket "moldova"
+    range 0..1000 -> 0.07
+    range 1001..3000 -> 0.08
+    range 3001..5000 -> 0.1
+    range 5001..max -> 0.12
+
+tax_bracket "romania"
+    range 0..500 -> 7 %
+    range 501..1000 -> 0.09
+    range 1001..max -> 11.23 %
+
+tax_compute "Alex"
+    bracket = "moldova"
+    income = 1170
+
+tax_compute "Ion"
+    bracket = "moldova"
+    income = 3053
+    
+    deductions
+        donation_deduction = 150
+
+tax_compute "Alan"
+    bracket = "romania"
+    income = 782
+
+    deductions
+        standart_deduction = 72
+```
+
+### Output:
+```
+Alex : 93.6
+Ion : ...
+Alan : ...
 ```
