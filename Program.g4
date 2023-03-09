@@ -13,21 +13,21 @@ ranges:
 tax_computes:
     'tax_compute' SPACE TEXT NEWLINE+
     INDENT 'bracket' SPACE? '=' SPACE? TEXT NEWLINE+
-    INDENT 'income' SPACE? '=' SPACE? REAL NEWLINE+
+    INDENT 'income' SPACE? '=' SPACE? REAL NEWLINE*
     deductions?;
 
 deductions:
-    INDENT 'deductions' NEWLINE+ (
+    NEWLINE+ INDENT 'deductions' NEWLINE+ (
         donation_deductions |
         standart_deductions |
         donation_deductions standart_deductions |
         standart_deductions donation_deductions);
 
 donation_deductions:
-    DINDENT 'donations' SPACE? '=' SPACE? REAL NEWLINE+;
+    DINDENT 'donations' SPACE? '=' SPACE? REAL NEWLINE?;
 
 standart_deductions:
-    DINDENT 'standart' SPACE? '=' SPACE? REAL NEWLINE+;
+    DINDENT 'standart' SPACE? '=' SPACE? REAL NEWLINE?;
 
 DINDENT: '        ';
 INDENT: '    ';
