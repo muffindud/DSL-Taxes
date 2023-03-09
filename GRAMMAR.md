@@ -32,16 +32,16 @@ P = {
     <standart> -> INDENTATION INDENTATION standart_deduction = <float> NEWLINE <newline>
 }
 ```
-
+TODO: Expresion support
 ### Code example:
 ```
-tax_bracket "moldova"
+tax_bracket "moldova:mdl"
     range 0..1000 -> 0.07
     range 1001..3000 -> 0.08
     range 3001..5000 -> 0.1
     range 5001..max -> 0.12
 
-tax_bracket "romania"
+tax_bracket "romania:eur"
     range 0..500 -> 7 %
     range 501..1000 -> 0.09
     range 1001..max -> 11.23 %
