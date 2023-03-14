@@ -2,15 +2,15 @@ grammar Program;
 
 
 program:
-    tax_brackets+ tax_computes+;
+    tax_bracket+ tax_compute+;
 
-tax_brackets:
-    'tax_bracket' SPACE TEXT NEWLINE+ ranges+;
+tax_bracket:
+    'tax_bracket' SPACE TEXT NEWLINE+ range+;
 
-ranges:
-    SPACE? 'range' SPACE REAL '..' (REAL | 'max') SPACE? '->' SPACE? (REAL | PERCENT) NEWLINE+;
+range:
+    SPACE? 'range' SPACE (REAL | 'max') SPACE? '->' SPACE? (REAL | PERCENT) NEWLINE+;
 
-tax_computes:
+tax_compute:
     'tax_compute' SPACE TEXT NEWLINE+
     SPACE? 'bracket' SPACE? '=' SPACE? TEXT NEWLINE+
     SPACE? 'income' SPACE? '=' SPACE? REAL NEWLINE*
