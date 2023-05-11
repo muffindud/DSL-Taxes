@@ -1,4 +1,4 @@
-# Generated from C:/Users/corne/Documents/TaxIt\Program.g4 by ANTLR 4.11.1
+# Generated from C:/Users/corne/Documents/TaxIt\Program.g4 by ANTLR 4.12.0
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .ProgramParser import ProgramParser
@@ -39,8 +39,8 @@ class ProgramVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ProgramParser#standart_deductions.
-    def visitStandart_deductions(self, ctx:ProgramParser.Standart_deductionsContext):
+    # Visit a parse tree produced by ProgramParser#standard_deductions.
+    def visitStandard_deductions(self, ctx:ProgramParser.Standard_deductionsContext):
         return self.visitChildren(ctx)
 
 

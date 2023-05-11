@@ -19,15 +19,15 @@ tax_compute:
 deductions:
     NEWLINE+ SPACE? 'deductions' NEWLINE+ (
         donation_deductions |
-        standart_deductions |
-        donation_deductions standart_deductions |
-        standart_deductions donation_deductions);
+        standard_deductions |
+        donation_deductions standard_deductions |
+        standard_deductions donation_deductions);
 
 donation_deductions:
-    SPACE? 'donations' SPACE? '=' SPACE? REAL NEWLINE?;
+    SPACE? 'donation_deduction' SPACE? '=' SPACE? REAL NEWLINE?;
 
-standart_deductions:
-    SPACE? 'standart' SPACE? '=' SPACE? REAL NEWLINE?;
+standard_deductions:
+    SPACE? 'standard_dedution' SPACE? '=' SPACE? REAL NEWLINE?;
 
 
 SPACE: [ ]+;

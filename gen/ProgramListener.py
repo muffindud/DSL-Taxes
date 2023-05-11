@@ -1,4 +1,4 @@
-# Generated from C:/Users/corne/Documents/TaxIt\Program.g4 by ANTLR 4.11.1
+# Generated from C:/Users/corne/Documents/TaxIt\Program.g4 by ANTLR 4.12.0
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .ProgramParser import ProgramParser
@@ -62,12 +62,12 @@ class ProgramListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by ProgramParser#standart_deductions.
-    def enterStandart_deductions(self, ctx:ProgramParser.Standart_deductionsContext):
+    # Enter a parse tree produced by ProgramParser#standard_deductions.
+    def enterStandard_deductions(self, ctx:ProgramParser.Standard_deductionsContext):
         pass
 
-    # Exit a parse tree produced by ProgramParser#standart_deductions.
-    def exitStandart_deductions(self, ctx:ProgramParser.Standart_deductionsContext):
+    # Exit a parse tree produced by ProgramParser#standard_deductions.
+    def exitStandard_deductions(self, ctx:ProgramParser.Standard_deductionsContext):
         pass
 
 

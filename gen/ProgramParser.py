@@ -1,4 +1,4 @@
-# Generated from C:/Users/corne/Documents/TaxIt\Program.g4 by ANTLR 4.11.1
+# Generated from C:/Users/corne/Documents/TaxIt\Program.g4 by ANTLR 4.12.0
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -81,7 +81,7 @@ class ProgramParser ( Parser ):
 
     literalNames = [ "<INVALID>", "'tax_bracket'", "'range'", "'max'", "'->'", 
                      "'tax_compute'", "'bracket'", "'='", "'income'", "'deductions'", 
-                     "'donations'", "'standart'" ]
+                     "'donation_deduction'", "'standard_dedution'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
@@ -94,10 +94,10 @@ class ProgramParser ( Parser ):
     RULE_tax_compute = 3
     RULE_deductions = 4
     RULE_donation_deductions = 5
-    RULE_standart_deductions = 6
+    RULE_standard_deductions = 6
 
     ruleNames =  [ "program", "tax_bracket", "range", "tax_compute", "deductions", 
-                   "donation_deductions", "standart_deductions" ]
+                   "donation_deductions", "standard_deductions" ]
 
     EOF = Token.EOF
     T__0=1
@@ -119,7 +119,7 @@ class ProgramParser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.11.1")
+        self.checkVersion("4.12.0")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -607,8 +607,8 @@ class ProgramParser ( Parser ):
             return self.getTypedRuleContext(ProgramParser.Donation_deductionsContext,0)
 
 
-        def standart_deductions(self):
-            return self.getTypedRuleContext(ProgramParser.Standart_deductionsContext,0)
+        def standard_deductions(self):
+            return self.getTypedRuleContext(ProgramParser.Standard_deductionsContext,0)
 
 
         def NEWLINE(self, i:int=None):
@@ -691,19 +691,19 @@ class ProgramParser ( Parser ):
 
             elif la_ == 2:
                 self.state = 117
-                self.standart_deductions()
+                self.standard_deductions()
                 pass
 
             elif la_ == 3:
                 self.state = 118
                 self.donation_deductions()
                 self.state = 119
-                self.standart_deductions()
+                self.standard_deductions()
                 pass
 
             elif la_ == 4:
                 self.state = 121
-                self.standart_deductions()
+                self.standard_deductions()
                 self.state = 122
                 self.donation_deductions()
                 pass
@@ -811,7 +811,7 @@ class ProgramParser ( Parser ):
         return localctx
 
 
-    class Standart_deductionsContext(ParserRuleContext):
+    class Standard_deductionsContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -831,29 +831,29 @@ class ProgramParser ( Parser ):
             return self.getToken(ProgramParser.NEWLINE, 0)
 
         def getRuleIndex(self):
-            return ProgramParser.RULE_standart_deductions
+            return ProgramParser.RULE_standard_deductions
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterStandart_deductions" ):
-                listener.enterStandart_deductions(self)
+            if hasattr( listener, "enterStandard_deductions" ):
+                listener.enterStandard_deductions(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitStandart_deductions" ):
-                listener.exitStandart_deductions(self)
+            if hasattr( listener, "exitStandard_deductions" ):
+                listener.exitStandard_deductions(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStandart_deductions" ):
-                return visitor.visitStandart_deductions(self)
+            if hasattr( visitor, "visitStandard_deductions" ):
+                return visitor.visitStandard_deductions(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def standart_deductions(self):
+    def standard_deductions(self):
 
-        localctx = ProgramParser.Standart_deductionsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_standart_deductions)
+        localctx = ProgramParser.Standard_deductionsContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 12, self.RULE_standard_deductions)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)

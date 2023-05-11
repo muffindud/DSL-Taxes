@@ -17,9 +17,9 @@ P = {
     <tax_bracket> --> tax_bracket <space> <text> <newline>+ <ranges>+
     <range> --> <space>? range <space> (<real> | max) <space>? -> <space>? (<real> | <percent>) <newline>+
     <tax_compute> --> tax_compute <space> <text> <newline>+ <space> bracket <space>? = <space>? <text> <newline>+ <space>? income <space>? = <space>? <real> <newline>* <deductions>?
-    <deductions> --> <newline>+ <space>? deductions <newline>+ (<donation_deductions> | <standart_deductions> | <donation_deductions> <standart_deductions> | <standart_deductions> <donation_deductions>)
-    <donation_deductions> --> <space>? donations <space>? = <space>? <real> <newline>?
-    <standart_deductions> --> <space>? standart <space>? = <space>? <real> <newline>?
+    <deductions> --> <newline>+ <space>? deductions <newline>+ (<donation_deductions> | <standard_deductions> | <donation_deductions> <standard_deductions> | <standard_deductions> <donation_deductions>)
+    <donation_deductions> --> <space>? donation_deduction <space>? = <space>? <real> <newline>?
+    <standard_deductions> --> <space>? standard_deduction <space>? = <space>? <real> <newline>?
 
     <space> --> [ ]+
     <text> --> " ([a-zA-Z] | [ ] | [0-9] | : | + | - | =)+ "
@@ -40,25 +40,25 @@ tax_bracket "moldova:mdl"
 tax_bracket "romania:eur"
     range 500 -> 7 %
     range 1000 -> 0.09
-    range max -> 11.23 %
+    range max -> 11.2 %
 
 tax_compute "Alex"
-    bracket = "moldova"
+    bracket = "moldova:mdl"
     income = 1170
 
 tax_compute "Ion"
-    bracket = "moldova"
+    bracket = "moldova:mdl"
     income = 3053
-    
+
     deductions
         donation_deduction = 150
 
 tax_compute "Alan"
-    bracket = "romania"
+    bracket = "romania:eur"
     income = 782
 
     deductions
-        standart_deduction = 72
+        standard_deduction = 72
 ```
 
 ### Output:

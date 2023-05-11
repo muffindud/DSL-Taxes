@@ -23,5 +23,5 @@ NEWLINE=16
 '='=7
 'income'=8
 'deductions'=9
-'donations'=10
-'standart'=11
+'donation_deduction'=10
+'standard_dedution'=11

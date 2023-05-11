@@ -9,8 +9,8 @@ null
 '='
 'income'
 'deductions'
-'donations'
-'standart'
+'donation_deduction'
+'standard_dedution'
 null
 null
 null
@@ -43,7 +43,7 @@ range
 tax_compute
 deductions
 donation_deductions
-standart_deductions
+standard_deductions
 
 
 atn:

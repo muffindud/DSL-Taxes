@@ -1,0 +1,28 @@
+tax_bracket "moldova:mdl"
+    range 1000 -> 0.07
+    range 3000 -> 0.08
+    range 5000 -> 0.1
+    range max -> 0.12
+
+tax_bracket "romania:eur"
+    range 500 -> 7 %
+    range 1000 -> 0.09
+    range max -> 11.2 %
+
+tax_compute "Alex"
+    bracket = "moldova:mdl"
+    income = 1170
+
+tax_compute "Ion"
+    bracket = "moldova:mdl"
+    income = 3053
+
+    deductions
+        donation_deduction = 150
+
+tax_compute "Alan"
+    bracket = "romania:eur"
+    income = 782
+
+    deductions
+        standard_deduction = 72
