@@ -1,5 +1,6 @@
 import re
 from src import calculator
+from src import GUI
 
 
 def throw_error(error):
@@ -8,8 +9,12 @@ def throw_error(error):
 
 
 def main(file, env='cli'):
-    with open(file, 'r') as f:
-        content = f.readlines()
+    if env == 'cli':
+        with open(file, 'r') as f:
+            content = f.readlines()
+    elif env == 'gui':
+        with open("saves/" + file, 'r') as f:
+            content = f.readlines()
 
     # Remove all newlines from each element of content
     content = [x.strip() for x in content]
@@ -148,4 +153,7 @@ def main(file, env='cli'):
     for key in brackets.keys():
         brackets[key].sort(key=lambda x: x[0])
 
-    calculator.main(brackets, targets, env)
+    if env == 'cli':
+        calculator.main(brackets, targets, env)
+    elif env == 'gui':
+        GUI.GUI(brackets, targets, file)
