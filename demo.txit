@@ -15,7 +15,7 @@ tax_compute "Alex"
 
 tax_compute "Ion"
     bracket = "moldova:mdl"
-    income = 3053
+    income = 8000
 
     deductions
         donation_deduction = 150
@@ -23,6 +23,5 @@ tax_compute "Ion"
 tax_compute "Alan"
     bracket = "romania:eur"
     income = 782
-
     deductions
         standard_deduction = 72
