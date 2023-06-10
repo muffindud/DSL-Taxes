@@ -54,6 +54,7 @@ class Menu:
         self.app.title('TaxIt Menu')
         self.app.protocol("WM_DELETE_WINDOW", self.exit)
         self.app.geometry('300x100')
+        self.app.resizable(False, False)
 
         file_list = ['New File']
         for file in os.listdir("saves/"):
