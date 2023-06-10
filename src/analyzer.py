@@ -1,4 +1,5 @@
 import re
+from src import calculator
 
 
 def throw_error(error):
@@ -6,7 +7,7 @@ def throw_error(error):
     exit()
 
 
-def main(file):
+def main(file, env='cli'):
     with open(file, 'r') as f:
         content = f.readlines()
 
@@ -147,24 +148,4 @@ def main(file):
     for key in brackets.keys():
         brackets[key].sort(key=lambda x: x[0])
 
-    # TODO: Check if the formula is correct
-    for key in targets.keys():
-        if targets[key]['bracket'] in brackets.keys():
-            taxable = targets[key]['income'] - targets[key]['standard_deduction'] - targets[key]['donation_deduction']
-            taxable = round(taxable, 16)
-            i = 0
-            while brackets[targets[key]['bracket']][i][0] < taxable:
-                i += 1
-            tax = brackets[targets[key]['bracket']][i][1] * taxable
-
-            # Fix floating point error
-            tax = round(tax, 2)
-            targets[key]['tax'] = tax
-        else:
-            if targets[key]['bracket'] == '':
-                throw_error('Error: [' + key + '] does not have a bracket assigned.')
-            elif targets[key]['bracket'] not in brackets.keys():
-                throw_error('Error: Tax bracket [' + targets[key]['bracket'] + '] does not exist.')
-
-    for key in targets.keys():
-        print(key + ': ' '%.2f' % targets[key]['tax'])
+    calculator.main(brackets, targets, env)

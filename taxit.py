@@ -18,6 +18,6 @@ if __name__ == '__main__':
         path = sys.argv[1]
 
         if os.path.exists(path) and os.path.isfile(path):
-            analyzer.main(path)
+            analyzer.main(path, 'cli')
         else:
             throw_error('Error: Invalid path: [' + path + '].')
