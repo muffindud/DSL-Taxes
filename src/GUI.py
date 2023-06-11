@@ -2,6 +2,7 @@ import tkinter as tk
 import customtkinter as ctk
 from src.InputDialog import CTkInputDialog
 from src.TopLevelDialog import TopLevelDialog
+from src import calculator
 
 
 class GUI:
@@ -21,6 +22,7 @@ class GUI:
     target_donation_deduction_entry = None
     brackets_option_menu = None
     targets_option_menu = None
+    results_window = None
 
     def __init__(self, brackets=None, targets=None, path=''):
         self.brackets = brackets
@@ -133,7 +135,38 @@ class GUI:
         pass
 
     def compute(self):
-        pass
+        self.targets = calculator.main(self.brackets, self.targets, 'gui')
+
+        if self.results_window is None or not self.results_window.winfo_exists():
+            self.results_window = ctk.CTkToplevel(self.app)
+
+        self.app.after(100, self.results_window.focus)
+        self.results_window.title('Results')
+        self.results_window.resizable(False, False)
+
+        targets = []
+        results = []
+        for target in self.targets.keys():
+            targets.append(
+                ctk.CTkLabel(
+                    self.results_window,
+                    text=target,
+                    width=20,
+                    anchor=tk.W,
+                    font=('Arial', 24, 'bold')
+                )
+            )
+            results.append(
+                ctk.CTkLabel(
+                    self.results_window,
+                    text=str(self.targets[target]['tax']),
+                    width=20,
+                    anchor=tk.E,
+                    font=('Arial', 24)
+                )
+            )
+            targets[-1].grid(row=len(targets), column=0, sticky=tk.W)
+            results[-1].grid(row=len(results), column=1, sticky=tk.E)
 
     def new_range(self):
         if self.selected_bracket is not None:
