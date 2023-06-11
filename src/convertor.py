@@ -4,7 +4,7 @@ def main(brackets: dict, targets: dict):
     for bracket in brackets.keys():
         content += "tax_bracket = \"" + bracket + "\"\n"
         for bracket_range in brackets[bracket]:
-            content += "    range " + str(bracket_range[0]) + " - > " + str(bracket_range[1]) + "\n"
+            content += "    range " + str(bracket_range[0]) + " -> " + str(bracket_range[1]) + "\n"
         content += "\n"
 
     for target in targets.keys():

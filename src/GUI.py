@@ -29,11 +29,11 @@ class GUI:
         self.brackets = brackets
         self.targets = targets
         self.path = path
-        if brackets is None:
+        if brackets is None or len(brackets.keys()) == 0:
             self.brackets = {}
         else:
             self.selected_bracket = list(self.brackets.keys())[0]
-        if targets is None:
+        if targets is None or len(targets.keys()) == 0:
             self.targets = {}
         else:
             self.selected_target = list(self.targets.keys())[0]
@@ -133,6 +133,8 @@ class GUI:
         file.write(content)
 
     def compute(self):
+        print(self.targets)
+        print(self.brackets)
         self.targets = calculator.main(self.brackets, self.targets, 'gui')
 
         if self.results_window is None or not self.results_window.winfo_exists():
@@ -148,10 +150,10 @@ class GUI:
             targets.append(
                 ctk.CTkLabel(
                     self.results_window,
-                    text=target,
+                    text=target + ' :   ',
                     width=20,
                     anchor=tk.W,
-                    font=('Arial', 24, 'bold')
+                    font=('Arial', 24)
                 )
             )
             results.append(
@@ -230,6 +232,7 @@ class GUI:
             self.targets_option_menu.configure(
                 variable=tk.StringVar(value='')
             )
+        self.confirm_target()
 
     def update_ranges(self):
         if self.selected_bracket is not None:
@@ -296,10 +299,10 @@ class GUI:
 
     def confirm_target(self):
         if self.selected_target is not None:
-            self.targets[self.selected_target]['income'] = self.income_entry.get()
+            self.targets[self.selected_target]['income'] = float(self.income_entry.get())
             self.targets[self.selected_target]['bracket'] = self.target_bracket_option_menu.get()
-            self.targets[self.selected_target]['standard_deduction'] = self.target_standard_deduction_entry.get()
-            self.targets[self.selected_target]['donation_deduction'] = self.target_donation_deduction_entry.get()
+            self.targets[self.selected_target]['standard_deduction'] = float(self.target_standard_deduction_entry.get())
+            self.targets[self.selected_target]['donation_deduction'] = float(self.target_donation_deduction_entry.get())
             self.update_target_bracket()
             self.update_standard_deduction()
             self.update_donation_deduction()
