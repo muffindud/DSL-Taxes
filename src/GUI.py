@@ -42,7 +42,7 @@ class GUI:
 
     def exit(self):
         self.app.quit()
-        self.app.destroy()
+        self.app.after(100, self.app.destroy)
 
     def new_bracket(self):
         # TODO: Replace when Cancel button is fixed
@@ -53,20 +53,34 @@ class GUI:
 
         if text is not None and text != '':
             self.brackets[text] = []
-            self.update_brackets()
-            self.select_bracket(text)
-            self.target_bracket_option_menu.configure(
-                values=list(self.brackets.keys()),
-            )
-        pass
+            self.update_brackets('new')
 
     def delete_bracket(self):
-        # TODO
+        if self.selected_bracket is not None:
+            del self.brackets[self.selected_bracket]
+            self.update_brackets('delete')
 
-        self.target_bracket_option_menu.configure(
-            values=list(self.brackets.keys()),
-        )
-        pass
+    def update_brackets(self, flag):
+        if flag == 'new':
+            self.select_bracket(list(self.brackets.keys())[-1])
+            self.brackets_option_menu.configure(
+                values=list(self.brackets.keys()),
+                variable=tk.StringVar(value=list(self.brackets.keys())[-1])
+            )
+        elif flag == 'delete':
+            if len(self.brackets.keys()) > 0:
+                self.select_bracket(list(self.brackets.keys())[0])
+                self.brackets_option_menu.configure(
+                    values=list(self.brackets.keys()),
+                    variable=tk.StringVar(value=list(self.brackets.keys())[0])
+                )
+            else:
+                self.select_bracket(None)
+                self.brackets_option_menu.configure(
+                    values=list(self.brackets.keys()),
+                    variable=tk.StringVar(value='')
+                )
+        self.update_target_bracket()
 
     def new_target(self):
         pass
@@ -93,12 +107,6 @@ class GUI:
         self.update_ranges()
         self.brackets_option_menu.configure(
             variable=tk.StringVar(value=bracket)
-        )
-
-    def update_brackets(self):
-        self.brackets_option_menu.configure(
-            values=list(self.brackets.keys()),
-            variable=tk.StringVar(value=list(self.brackets.keys())[0])
         )
 
     def select_target(self, target):
@@ -147,6 +155,10 @@ class GUI:
                 variable=tk.StringVar(value='')
             )
 
+        self.target_bracket_option_menu.configure(
+            values=list(self.brackets.keys())
+        )
+        
     def update_standard_deduction(self):
         if self.selected_target is not None:
             self.target_standard_deduction_entry.configure(
