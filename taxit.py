@@ -12,6 +12,12 @@ def throw_error(error):
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         # Open the GUI if no arguments are given
+        # check if customtkinter is installed
+        try:
+            import customtkinter
+        except ImportError:
+            throw_error('Error: customtkinter is not installed. Please install it using the following command: '
+                        'pip install customtkinter.')
         menu = Menu.Menu()
     elif len(sys.argv) == 2:
         # Run the script for the given path
