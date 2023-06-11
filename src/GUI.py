@@ -1,6 +1,7 @@
 import tkinter as tk
 import customtkinter as ctk
 import os
+from src.InputDialog import CTkInputDialog
 
 
 class GUI:
@@ -18,6 +19,7 @@ class GUI:
     target_bracket_option_menu = None
     target_standard_deduction_entry = None
     target_donation_deduction_entry = None
+    brackets_option_menu = None
 
     def __init__(self, brackets=None, targets=None, path=''):
         self.brackets = brackets
@@ -43,11 +45,19 @@ class GUI:
         self.app.destroy()
 
     def new_bracket(self):
-        # TODO
+        # TODO: Replace when Cancel button is fixed
+        dialog = CTkInputDialog(text="Bracket name:", title="New Bracket")
+        # dialog = ctk.CTkInputDialog(text="Bracket name:", title="New Bracket")
 
-        self.target_bracket_option_menu.configure(
-            values=list(self.brackets.keys()),
-        )
+        text = dialog.get_input()
+
+        if text is not None and text != '':
+            self.brackets[text] = []
+            self.update_brackets()
+            self.select_bracket(text)
+            self.target_bracket_option_menu.configure(
+                values=list(self.brackets.keys()),
+            )
         pass
 
     def delete_bracket(self):
@@ -66,9 +76,9 @@ class GUI:
 
     def save(self):
         for bracket in self.brackets.keys():
-            print(self.brackets[bracket])
+            print(bracket, self.brackets[bracket])
         for target in self.targets.keys():
-            print(self.targets[target])
+            print(target, self.targets[target])
         pass
 
     def compute(self):
@@ -81,6 +91,15 @@ class GUI:
     def select_bracket(self, bracket):
         self.selected_bracket = bracket
         self.update_ranges()
+        self.brackets_option_menu.configure(
+            variable=tk.StringVar(value=bracket)
+        )
+
+    def update_brackets(self):
+        self.brackets_option_menu.configure(
+            values=list(self.brackets.keys()),
+            variable=tk.StringVar(value=list(self.brackets.keys())[0])
+        )
 
     def select_target(self, target):
         self.selected_target = target
@@ -94,7 +113,8 @@ class GUI:
             if len(self.brackets[self.selected_bracket]) > 0:
                 self.ranges_option_menu.configure(
                     values=[str(i[0]) + ' -> ' + str(i[1]) for i in self.brackets[self.selected_bracket]],
-                    variable=tk.StringVar(value=str(list(self.brackets[self.selected_bracket])[0][0]) + '->' + str(list(self.brackets[self.selected_bracket])[0][1]))
+                    variable=tk.StringVar(value=str(list(self.brackets[self.selected_bracket])[0][0]) + '->' + str(
+                        list(self.brackets[self.selected_bracket])[0][1]))
                 )
             else:
                 self.ranges_option_menu.configure(
@@ -162,14 +182,14 @@ class GUI:
         brackets_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky='nsew')
 
         # Brackets list
-        brackets_option_menu = ctk.CTkOptionMenu(
+        self.brackets_option_menu = ctk.CTkOptionMenu(
             brackets_frame,
             values=list(self.brackets.keys()),
             variable=tk.StringVar(value=self.selected_bracket),
             font=('Arial', 20),
             command=self.select_bracket
         )
-        brackets_option_menu.pack(padx=12, pady=10)
+        self.brackets_option_menu.pack(padx=12, pady=10)
 
         # Ranges list
         self.ranges_option_menu = ctk.CTkOptionMenu(
