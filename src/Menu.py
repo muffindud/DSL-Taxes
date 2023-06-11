@@ -16,7 +16,7 @@ class Menu:
 
     def exit(self):
         self.app.quit()
-        self.app.destroy()
+        self.app.after(100, self.app.destroy)
 
     def new_file(self):
         # TODO: Replace when Cancel button is fixed
@@ -28,11 +28,9 @@ class Menu:
         if text is None:
             pass
         elif text == '':
-            # self.app.quit()
             self.exit()
             GUI.GUI(path=time.strftime("%Y%m%d-%H%M%S") + '.txit')
         else:
-            # self.app.quit()
             self.exit()
             GUI.GUI(path=text)
 
@@ -40,7 +38,6 @@ class Menu:
         if self.selected_file == 'New File':
             self.new_file()
         else:
-            # self.app.quit()
             self.exit()
             analyzer.main(self.selected_file, 'gui')
 
