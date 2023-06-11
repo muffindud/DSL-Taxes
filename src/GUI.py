@@ -1,6 +1,5 @@
 import tkinter as tk
 import customtkinter as ctk
-import os
 from src.InputDialog import CTkInputDialog
 from src.TopLevelDialog import TopLevelDialog
 
@@ -21,6 +20,7 @@ class GUI:
     target_standard_deduction_entry = None
     target_donation_deduction_entry = None
     brackets_option_menu = None
+    targets_option_menu = None
 
     def __init__(self, brackets=None, targets=None, path=''):
         self.brackets = brackets
@@ -84,11 +84,47 @@ class GUI:
         self.update_target_bracket()
 
     def new_target(self):
-        pass
+        # TODO: Replace when Cancel button is fixed
+        dialog = CTkInputDialog(text="Target name:", title="New Target")
+        # dialog = ctk.CTkInputDialog(text="Target name:", title="New Target")
+
+        text = dialog.get_input()
+
+        if text is not None and text != '':
+            self.targets[text] = {'income': 0, 'bracket': None, 'standard_deduction': 0, 'donation_deduction': 0, 'tax': 0}
+            self.update_targets('new')
 
     def delete_target(self):
-        pass
+        if self.selected_target is not None:
+            del self.targets[self.selected_target]
+            self.update_targets('delete')
 
+    def update_targets(self, flag):
+        if flag == 'new':
+            self.select_target(list(self.targets.keys())[-1])
+            self.targets_option_menu.configure(
+                values=list(self.targets.keys()),
+                variable=tk.StringVar(value=list(self.targets.keys())[-1])
+            )
+        elif flag == 'delete':
+            if len(self.targets.keys()) > 0:
+                self.select_target(list(self.targets.keys())[0])
+                self.targets_option_menu.configure(
+                    values=list(self.targets.keys()),
+                    variable=tk.StringVar(value=list(self.targets.keys())[0])
+                )
+            else:
+                self.select_target(None)
+                self.targets_option_menu.configure(
+                    values=[],
+                    variable=tk.StringVar(value='')
+                )
+        self.update_income()
+        self.update_target_bracket()
+        self.update_standard_deduction()
+        self.update_donation_deduction()
+
+    # TODO: Finish this function
     def save(self):
         for bracket in self.brackets.keys():
             print(bracket, self.brackets[bracket])
@@ -128,10 +164,42 @@ class GUI:
 
     def select_target(self, target):
         self.selected_target = target
-        self.update_income()
-        self.update_target_bracket()
-        self.update_standard_deduction()
-        self.update_donation_deduction()
+        if target is not None and target != '':
+            self.update_income()
+            self.update_target_bracket()
+            self.update_standard_deduction()
+            self.update_donation_deduction()
+            self.targets_option_menu.configure(
+                variable=tk.StringVar(value=target)
+            )
+            self.income_entry.configure(
+                state=tk.NORMAL
+            )
+            self.target_bracket_option_menu.configure(
+                state=tk.NORMAL
+            )
+            self.target_standard_deduction_entry.configure(
+                state=tk.NORMAL
+            )
+            self.target_donation_deduction_entry.configure(
+                state=tk.NORMAL
+            )
+        else:
+            self.income_entry.configure(
+                state=tk.DISABLED
+            )
+            self.target_bracket_option_menu.configure(
+                state=tk.DISABLED
+            )
+            self.target_standard_deduction_entry.configure(
+                state=tk.DISABLED
+            )
+            self.target_donation_deduction_entry.configure(
+                state=tk.DISABLED
+            )
+            self.targets_option_menu.configure(
+                variable=tk.StringVar(value='')
+            )
 
     def update_ranges(self):
         if self.selected_bracket is not None:
@@ -194,6 +262,22 @@ class GUI:
         else:
             self.target_donation_deduction_entry.configure(
                 textvariable=tk.StringVar(value='0.00')
+            )
+
+    def confirm_target(self):
+        if self.selected_target is not None:
+            self.targets[self.selected_target]['income'] = self.income_entry.get()
+            self.targets[self.selected_target]['bracket'] = self.target_bracket_option_menu.get()
+            self.targets[self.selected_target]['standard_deduction'] = self.target_standard_deduction_entry.get()
+            self.targets[self.selected_target]['donation_deduction'] = self.target_donation_deduction_entry.get()
+            self.update_target_bracket()
+            self.update_standard_deduction()
+            self.update_donation_deduction()
+            self.update_income()
+            self.update_ranges()
+        else:
+            self.targets_option_menu.configure(
+                variable=tk.StringVar(value='')
             )
 
     def main(self):
@@ -273,14 +357,14 @@ class GUI:
         targets_frame.grid(row=0, column=1, padx=(10, 10), pady=(10, 10), sticky='nsew')
 
         # Targets list
-        targets_option_menu = ctk.CTkOptionMenu(
+        self.targets_option_menu = ctk.CTkOptionMenu(
             targets_frame,
             values=list(self.targets.keys()),
             variable=tk.StringVar(value=self.selected_target),
             font=('Arial', 20),
             command=self.select_target
         )
-        targets_option_menu.pack(padx=12, pady=10)
+        self.targets_option_menu.pack(padx=12, pady=10)
 
         # Target frame
         target_frame = ctk.CTkFrame(
@@ -293,7 +377,7 @@ class GUI:
             target_frame,
             textvariable=tk.StringVar(value='0.00'),
             font=('Arial', 20),
-            placeholder_text='Income'
+            placeholder_text='Income',
         )
         self.income_entry.pack(padx=12, pady=10)
         self.update_income()
@@ -311,7 +395,7 @@ class GUI:
             target_frame,
             textvariable=tk.StringVar(value='0.00'),
             font=('Arial', 20),
-            placeholder_text='Standard Deduction'
+            placeholder_text='Standard Deduction',
         )
         self.target_standard_deduction_entry.pack(padx=12, pady=10)
         self.update_standard_deduction()
@@ -320,10 +404,18 @@ class GUI:
             target_frame,
             textvariable=tk.StringVar(value='0.00'),
             font=('Arial', 20),
-            placeholder_text='Donation Deduction'
+            placeholder_text='Donation Deduction',
         )
         self.target_donation_deduction_entry.pack(padx=12, pady=10)
         self.update_donation_deduction()
+
+        confirm_target_button = ctk.CTkButton(
+            target_frame,
+            text='Confirm',
+            font=('Arial', 20),
+            command=self.confirm_target
+        )
+        confirm_target_button.pack(padx=12, pady=10)
 
         # New target button
         new_target_button = ctk.CTkButton(
