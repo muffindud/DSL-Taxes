@@ -127,9 +127,9 @@ class GUI:
     def save(self):
         content = convertor.main(self.brackets, self.targets)
         try:
-            file = open(self.path, 'x')
+            file = open("saves/" + self.path, 'x')
         except FileExistsError:
-            file = open(self.path, 'w')
+            file = open("saves/" + self.path, 'w')
         file.write(content)
 
     def compute(self):
