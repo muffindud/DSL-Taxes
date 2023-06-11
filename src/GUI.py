@@ -104,9 +104,20 @@ class GUI:
             dialog = TopLevelDialog(text="Range value and rate:", title="New Range")
 
             text = dialog.get_input()
-            print(text)
 
-        self.update_ranges()
+            if text is not None and text != '':
+                text = text.split(' ')
+                self.brackets[self.selected_bracket].append((float(text[0]), float(text[1])))
+                self.update_ranges()
+
+    def delete_range(self):
+        if self.selected_bracket is not None:
+            # delete the selected range in ranges_option_menu
+            selected_range = self.ranges_option_menu.get()
+            selected_range = selected_range.split('->')
+            selected_range = (float(selected_range[0]), float(selected_range[1]))
+            self.brackets[self.selected_bracket].remove(selected_range)
+            self.update_ranges()
 
     def select_bracket(self, bracket):
         self.selected_bracket = bracket
@@ -227,6 +238,15 @@ class GUI:
             command=self.new_range
         )
         new_range_button.pack(padx=12, pady=10)
+
+        # Delete range button
+        delete_range_button = ctk.CTkButton(
+            brackets_frame,
+            text='Delete Range',
+            font=('Arial', 20),
+            command=self.delete_range
+        )
+        delete_range_button.pack(padx=12, pady=10)
 
         # New bracket button
         new_bracket_button = ctk.CTkButton(

@@ -113,9 +113,28 @@ class TopLevelDialog(CTkToplevel):
         self._entry2.bind("<Return>", self._ok_event)
 
     def _ok_event(self, event=None):
-        self._user_input = self._entry1.get() + ' ' + self._entry2.get()
-        self.grab_release()
-        self.destroy()
+        try:
+            float(self._entry1.get())
+            float(self._entry2.get())
+            self._user_input = self._entry1.get() + ' ' + self._entry2.get()
+            self.grab_release()
+            self.destroy()
+        except ValueError:
+            self._label.configure(text="Please enter a valid number!", text_color="red")
+
+            try:
+                float(self._entry1.get())
+            except ValueError:
+                self._entry1.configure(
+                    fg_color="red",
+                )
+
+            try:
+                float(self._entry2.get())
+            except ValueError:
+                self._entry2.configure(
+                    fg_color="red",
+                )
 
     def _on_closing(self):
         self.grab_release()
