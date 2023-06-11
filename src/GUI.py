@@ -3,6 +3,7 @@ import customtkinter as ctk
 from src.InputDialog import CTkInputDialog
 from src.TopLevelDialog import TopLevelDialog
 from src import calculator
+from src import convertor
 
 
 class GUI:
@@ -36,10 +37,6 @@ class GUI:
             self.targets = {}
         else:
             self.selected_target = list(self.targets.keys())[0]
-
-        print(self.brackets)
-        print(self.targets)
-        print(self.path)
 
         self.main()
 
@@ -128,11 +125,12 @@ class GUI:
 
     # TODO: Finish this function
     def save(self):
-        for bracket in self.brackets.keys():
-            print(bracket, self.brackets[bracket])
-        for target in self.targets.keys():
-            print(target, self.targets[target])
-        pass
+        content = convertor.main(self.brackets, self.targets)
+        try:
+            file = open(self.path, 'x')
+        except FileExistsError:
+            file = open(self.path, 'w')
+        file.write(content)
 
     def compute(self):
         self.targets = calculator.main(self.brackets, self.targets, 'gui')
@@ -181,7 +179,6 @@ class GUI:
 
     def delete_range(self):
         if self.selected_bracket is not None:
-            # delete the selected range in ranges_option_menu
             selected_range = self.ranges_option_menu.get()
             selected_range = selected_range.split('->')
             selected_range = (float(selected_range[0]), float(selected_range[1]))
@@ -405,7 +402,6 @@ class GUI:
         )
         target_frame.pack(padx=12, pady=10)
 
-        # TODO:Target info
         self.income_entry = ctk.CTkEntry(
             target_frame,
             textvariable=tk.StringVar(value='0.00'),
