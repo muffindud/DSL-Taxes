@@ -2,6 +2,7 @@ import tkinter as tk
 import customtkinter as ctk
 import os
 from src.InputDialog import CTkInputDialog
+from src.TopLevelDialog import TopLevelDialog
 
 
 class GUI:
@@ -99,8 +100,13 @@ class GUI:
         pass
 
     def new_range(self):
+        if self.selected_bracket is not None:
+            dialog = TopLevelDialog(text="Range value and rate:", title="New Range")
+
+            text = dialog.get_input()
+            print(text)
+
         self.update_ranges()
-        pass
 
     def select_bracket(self, bracket):
         self.selected_bracket = bracket
@@ -158,7 +164,7 @@ class GUI:
         self.target_bracket_option_menu.configure(
             values=list(self.brackets.keys())
         )
-        
+
     def update_standard_deduction(self):
         if self.selected_target is not None:
             self.target_standard_deduction_entry.configure(
