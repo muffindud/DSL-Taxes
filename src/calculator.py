@@ -22,9 +22,9 @@ def main(brackets, targets, env='cli'):
             targets[key]['tax'] = tax
         else:
             if targets[key]['bracket'] == '':
-                throw_error('Error: [' + key + '] does not have a bracket assigned.')
+                throw_error('Error: [' + key + '] does not have a bracket assigned.', env)
             elif targets[key]['bracket'] not in brackets.keys():
-                throw_error('Error: Tax bracket [' + targets[key]['bracket'] + '] does not exist.')
+                throw_error('Error: Tax bracket [' + targets[key]['bracket'] + '] does not exist.', env)
 
     if env == 'cli':
         for key in targets.keys():
